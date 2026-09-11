@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FINMITRA — Your Everyday Financial Companion | SDG 1 No Poverty</title>
+  <meta name="description" content="AI-powered financial inclusion assistant helping individuals with limited income manage budgets, build savings, and improve financial literacy.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d9488'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="navbar-container">
+      <div class="brand" id="brand-logo">
+        <div class="brand-icon">FM</div>
+        <div class="brand-info">
+          <span class="brand-name">FINMITRA</span>
+          <span class="brand-tagline">Everyday Financial Companion</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu / Drawer on mobile -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
+        <div class="drawer-header">
+          <div class="drawer-brand">
+            <span class="drawer-icon">FM</span>
+            <span class="drawer-title">FINMITRA Menu</span>
+          </div>
+          <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close navigation menu">&times;</button>
+        </div>
+        <ul class="nav-links">
+          <li><button class="nav-btn active" data-tab="landing"><span class="nav-icon">✨</span> Welcome</button></li>
+          <li><button class="nav-btn" data-tab="dashboard"><span class="nav-icon">🏠</span> Home</button></li>
+          <li><button class="nav-btn" data-tab="chat"><span class="nav-icon">💬</span> AI Chat</button></li>
+          <li><button class="nav-btn" data-tab="budget"><span class="nav-icon">📊</span> Budget Tool</button></li>
+          <li><button class="nav-btn" data-tab="literacy"><span class="nav-icon">📚</span> Learn</button></li>
+          <li><button class="nav-btn" data-tab="resources"><span class="nav-icon">🛡️</span> Resources</button></li>
+          <li><button class="nav-btn" data-tab="about"><span class="nav-icon">ℹ️</span> About &amp; AI</button></li>
+        </ul>
+      </nav>
+
+      <div class="header-right">
+        <a href="#about" class="sdg-badge" data-action="explore-literacy" title="United Nations Sustainable Development Goal 1">
+          <span>SDG 1</span> No Poverty
+        </a>
+        <button class="menu-toggle" id="menu-toggle-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
+  <!-- Main Content Areas -->
+  <main class="app-content">
+
+    <!-- 1. LANDING TAB -->
+    <section id="tab-landing" class="tab-pane active">
+      <div class="hero-section">
+        <div class="hero-content">
+          <h1>Smart Financial Confidence for <span class="hero-highlight">Every Income</span>.</h1>
+          <p class="hero-description">
+            FINMITRA is an educational, non-judgmental AI companion designed for <strong>UN SDG 1: No Poverty</strong>. 
+            We empower low-income earners, students, and families to manage tight budgets, build emergency buffers, and stay safe from financial scams.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-action="start-chat">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Start Chatting with FinMitra
+            </button>
+            <button class="btn btn-secondary" data-action="explore-budget">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="16" y1="14" x2="16" y2="18"></line>
+                <path d="M16 10h.01"></path>
+                <path d="M12 10h.01"></path>
+                <path d="M8 10h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M8 14h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M8 18h.01"></path>
+              </svg>
+              Calculate Your Budget
+            </button>
+          </div>
+          <div class="hero-badges">
+            <div class="hero-badge-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              100% Free & Educational
+            </div>
+            <div class="hero-badge-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              No Bank Account or Passwords Required
+            </div>
+            <div class="hero-badge-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Powered by Responsible AI
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-preview">
+          <div class="hero-card-preview">
+            <div class="preview-chat-bubble preview-chat-user">
+              "I earn a modest daily wage and struggle to save. How do I start?"
+            </div>
+            <div class="preview-chat-bubble preview-chat-bot">
+              <strong>FinMitra:</strong> Start with the <em>Micro-Buffer Rule</em>. Even saving ₹20 a day creates a ₹600 monthly safety net. That prevents borrowing at high interest during sudden medical or grocery emergencies. Let's create your starter plan step-by-step.
+            </div>
+            <button class="btn btn-sm btn-primary" style="width:100%;" data-action="start-chat">Ask Your Own Question</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="section-header" style="margin-top: 2rem;">
+        <h2 class="section-title">Built for Real-World Financial Resilience</h2>
+        <p class="section-subtitle">Practical tools and honest AI designed to lift households toward sustainable stability.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Empathetic AI Companion</h3>
+          <p>Ask anything about tight budgets, money stress, or banking concepts in plain language without fear of judgment.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Practical Budget Calculator</h3>
+          <p>Allocate limited income into essentials, non-essentials, and savings with real-time feedback and realistic advice.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Debt & Scam Defense</h3>
+          <p>Learn to spot predatory high-interest loan traps, instant loan app scams, and fake OTP requests before losing money.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌱</div>
+          <h3>Micro-Savings Habits</h3>
+          <p>Simple psychological frameworks like the 24-hour pause and starter emergency funds tailored for tight incomes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DASHBOARD / HOME TAB -->
+    <section id="tab-dashboard" class="tab-pane">
+      <div class="welcome-banner">
+        <div>
+          <h2>Hello! How can FinMitra help your wallet today?</h2>
+          <p>Financial inclusion starts with small, daily steps. Explore practical tools or choose a conversation prompt below to get instant guidance.</p>
+        </div>
+        <button class="btn btn-secondary" data-action="start-chat" style="white-space:nowrap;">Open AI Chat</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div>
+          <div class="section-header">
+            <h3 class="section-title" style="font-size: 1.25rem;">Quick Tools & Actions</h3>
+          </div>
+          <div class="quick-actions-row">
+            <div class="quick-action-card" data-action="start-chat">
+              <span class="icon">💬</span>
+              <span class="title">Ask FinMitra AI</span>
+              <span class="desc">Ask any question about managing money.</span>
+            </div>
+            <div class="quick-action-card" data-action="explore-budget">
+              <span class="icon">🧮</span>
+              <span class="title">Monthly Budget</span>
+              <span class="desc">Track essentials, wants, and savings.</span>
+            </div>
+            <div class="quick-action-card" data-action="explore-literacy">
+              <span class="icon">📚</span>
+              <span class="title">Money Lessons</span>
+              <span class="desc">Emergency funds, loans, and interest.</span>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 1.5rem;">
+            <h3 style="font-size: 1.15rem; font-weight:700; margin-bottom: 0.5rem;">💡 SDG 1 Tip of the Day</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <strong>The 24-Hour Purchase Pause:</strong> Before buying any non-essential item, wait 24 hours. Often, the urge passes and the money stays safely in your pocket or emergency cushion.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="prompt-suggestions-card">
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Suggested Prompts</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Click any prompt to ask FinMitra immediately:</p>
+            <div class="prompt-chips-grid">
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="I have a limited monthly income. How should I manage it?">
+                <span>I have a limited monthly income. How should I manage it?</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="How can I start saving with a small income?">
+                <span>How can I start saving with a small income?</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="How much should I keep for an emergency fund?">
+                <span>How much should I keep for an emergency fund?</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="Help me reduce unnecessary daily expenses.">
+                <span>Help me reduce unnecessary daily expenses.</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="Explain the difference between needs and wants with everyday examples.">
+                <span>Explain needs vs wants with everyday examples.</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="What critical questions should I ask before taking any loan?">
+                <span>What should I know before taking a loan?</span>
+                <span class="arrow">→</span>
+              </button>
+              <button class="prompt-chip-item ask-finmitra-btn" data-prompt="How can I spot and avoid common financial and loan scams?">
+                <span>How can I avoid common financial scams?</span>
+                <span class="arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. AI CHAT TAB (CORE COMPETITION FOCUS) -->
+    <section id="tab-chat" class="tab-pane">
+      <div class="chat-page-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-avatar">FM</div>
+            <div>
+              <div class="chat-header-title">FINMITRA AI</div>
+              <div id="ai-status-indicator" class="chat-status-pill">
+                <span class="status-dot"></span> FinMitra Online (Gemini 3.5 Flash)
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-secondary" onclick="window.finmitraChat && (window.finmitraChat.messagesContainer.innerHTML = '') || window.finmitraChat.init()">
+            Clear Chat
+          </button>
+        </div>
+
+        <!-- Messages Flow -->
+        <div id="chat-messages" class="chat-messages-container">
+          <!-- Populated by chat.js -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-area">
+          <!-- Error banner (hidden by default) -->
+          <div id="chat-error-banner" class="error-banner" style="display: none;">
+            <span id="chat-error-text">Unable to reach FinMitra.</span>
+            <button id="chat-retry-btn" class="btn btn-sm btn-primary" style="padding:0.2rem 0.6rem;">Retry</button>
+          </div>
+
+          <!-- Suggested Chips -->
+          <div id="chat-chips-bar" class="chat-chips-bar">
+            <button class="chat-chip" data-prompt="How do I build a ₹1,000 emergency fund on a small income?">₹1,000 Emergency Fund</button>
+            <button class="chat-chip" data-prompt="Give me 3 realistic ways to cut grocery and utility expenses.">Cut Essential Expenses</button>
+            <button class="chat-chip" data-prompt="Explain needs vs wants simply.">Needs vs Wants</button>
+            <button class="chat-chip" data-prompt="How do predatory loan apps trick people?">Loan App Warnings</button>
+            <button class="chat-chip" data-prompt="How does compound interest help someone saving small amounts?">Compound Interest</button>
+          </div>
+
+          <div class="chat-input-wrapper">
+            <textarea 
+              id="chat-textarea" 
+              class="chat-textarea" 
+              placeholder="Ask FinMitra about budgeting, saving, or understanding expenses (e.g., 'How can I save ₹50 a day?')..." 
+              rows="1"
+            ></textarea>
+            <button id="chat-send-btn" class="send-btn" title="Send message (Enter)" aria-label="Send message">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BUDGET TOOL TAB -->
+    <section id="tab-budget" class="tab-pane">
+      <div class="section-header">
+        <h2 class="section-title">Educational Budget Calculator</h2>
+        <p class="section-subtitle">A realistic tool designed for tight or fluctuating incomes. Learn where your money goes and avoid unexpected deficits.</p>
+      </div>
+
+      <div class="budget-grid">
+        <!-- Input Form -->
+        <div class="card">
+          <h3 style="font-size: 1.15rem; font-weight:700; margin-bottom: 1.25rem;">Enter Your Monthly Estimates</h3>
+
+          <div class="budget-input-group">
+            <label for="budget-income">1. Monthly Income (₹)</label>
+            <div class="helper-text">Your take-home salary, daily wages, or steady monthly earnings.</div>
+            <div class="currency-input">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="budget-income" min="0" step="100" placeholder="e.g. 20000" value="20000">
+            </div>
+          </div>
+
+          <div class="budget-input-group">
+            <label for="budget-essentials">2. Essential Expenses (Needs) (₹)</label>
+            <div class="helper-text">Rent, groceries, utilities, necessary transport, medicine, and loan minimums.</div>
+            <div class="currency-input">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="budget-essentials" min="0" step="100" placeholder="e.g. 11000" value="11000">
+            </div>
+          </div>
+
+          <div class="budget-input-group">
+            <label for="budget-nonessentials">3. Non-Essential Expenses (Wants) (₹)</label>
+            <div class="helper-text">Dining out, snacks, tea stalls, subscriptions, non-urgent shopping.</div>
+            <div class="currency-input">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="budget-nonessentials" min="0" step="100" placeholder="e.g. 4000" value="4000">
+            </div>
+          </div>
+
+          <div class="budget-input-group">
+            <label for="budget-savings">4. Planned Monthly Savings (₹)</label>
+            <div class="helper-text">Money directed to emergency buffer or savings deposit.</div>
+            <div class="currency-input">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="budget-savings" min="0" step="100" placeholder="e.g. 2500" value="2500">
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+            <button id="budget-reset-btn" class="btn btn-sm btn-secondary">Reset Fields</button>
+          </div>
+        </div>
+
+        <!-- Real-time Visualizer & Insights -->
+        <div class="card">
+          <h3 style="font-size: 1.15rem; font-weight:700; margin-bottom: 1rem;">Monthly Overview & Ratios</h3>
+
+          <div class="budget-stats-grid">
+            <div class="stat-box">
+              <div class="stat-label">Total Income</div>
+              <div id="stat-income" class="stat-value">₹20,000</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Total Expenses</div>
+              <div id="stat-expenses" class="stat-value">₹15,000</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Monthly Savings</div>
+              <div id="stat-savings" class="stat-value">₹2,500</div>
+            </div>
+            <div class="stat-box highlight-balance" id="stat-balance-card">
+              <div class="stat-label">Remaining Balance (Buffer)</div>
+              <div id="stat-balance" class="stat-value">₹2,500</div>
+            </div>
+          </div>
+
+          <!-- Allocation Bar -->
+          <div class="allocation-bar-wrapper">
+            <div style="display:flex; justify-content:space-between; font-size: 0.85rem; font-weight:600;">
+              <span>Allocation Breakdown</span>
+            </div>
+            <div class="allocation-bar">
+              <div id="bar-essentials" class="bar-segment bar-essentials" style="width: 55%;" title="Essentials"></div>
+              <div id="bar-nonessentials" class="bar-segment bar-nonessentials" style="width: 20%;" title="Non-Essentials"></div>
+              <div id="bar-savings" class="bar-segment bar-savings" style="width: 12.5%;" title="Savings"></div>
+              <div id="bar-remaining" class="bar-segment bar-remaining" style="width: 12.5%;" title="Buffer"></div>
+            </div>
+            <div class="allocation-legend">
+              <div class="legend-item"><span class="legend-dot bar-essentials"></span> Essentials <span id="legend-essentials-pct">(55%)</span></div>
+              <div class="legend-item"><span class="legend-dot bar-nonessentials"></span> Wants <span id="legend-nonessentials-pct">(20%)</span></div>
+              <div class="legend-item"><span class="legend-dot bar-savings"></span> Savings <span id="legend-savings-pct">(13%)</span></div>
+              <div class="legend-item"><span class="legend-dot bar-remaining"></span> Buffer <span id="legend-remaining-pct">(13%)</span></div>
+            </div>
+          </div>
+
+          <!-- Educational Insights -->
+          <div class="insights-box">
+            <h4>💡 Practical Budget Guidance</h4>
+            <ul id="budget-insights-list" class="insights-list">
+              <!-- Dynamically populated by budget.js -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FINANCIAL LITERACY & SAVINGS TAB -->
+    <section id="tab-literacy" class="tab-pane">
+      <div class="section-header">
+        <h2 class="section-title">Practical Financial Literacy</h2>
+        <p class="section-subtitle">Real-world guidance designed to build sustainable financial habits, avoid debt traps, and grow security.</p>
+      </div>
+
+      <div class="literacy-grid">
+        <div class="literacy-card">
+          <div>
+            <span class="literacy-badge badge-emergency">Safety Net</span>
+            <h3>1. The Starter Emergency Fund</h3>
+            <p>A safety cushion protects you from taking high-interest loans when an unexpected medical bill or vehicle breakdown occurs. Aim for a small starter milestone (e.g. ₹1,000 to ₹5,000) first, rather than feeling overwhelmed by 6 months of expenses.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary ask-finmitra-btn" data-prompt="How can I build a realistic starter emergency fund on a low income?">Ask FinMitra about this</button>
+          </div>
+        </div>
+
+        <div class="literacy-card">
+          <div>
+            <span class="literacy-badge badge-budget">Habits</span>
+            <h3>2. Distinguishing Needs vs. Wants</h3>
+            <p><strong>Needs</strong> are required for survival and basic dignity: simple food, shelter, clean water, basic medicine, commute to work. <strong>Wants</strong> are preferences: takeout food, branded clothes, impulse snacks. Apply the 24-hour pause before buying any want.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary ask-finmitra-btn" data-prompt="Give me clear rules to tell needs from wants when living on a tight budget.">Ask FinMitra about this</button>
+          </div>
+        </div>
+
+        <div class="literacy-card">
+          <div>
+            <span class="literacy-badge badge-debt">Debt Relief</span>
+            <h3>3. Snowball vs. Avalanche Debt Methods</h3>
+            <p>If you have multiple small debts, the <em>Avalanche</em> method pays off the highest interest loan first (saves the most money). The <em>Snowball</em> method pays off the smallest balance first (provides psychological momentum). Both beat making minimum payments endlessly.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary ask-finmitra-btn" data-prompt="Explain the debt avalanche and debt snowball methods with a simple example.">Ask FinMitra about this</button>
+          </div>
+        </div>
+
+        <div class="literacy-card">
+          <div>
+            <span class="literacy-badge badge-emergency">Growth</span>
+            <h3>4. The Power of Micro-Savings</h3>
+            <p>Saving does not require large sums. Setting aside ₹30 a day amounts to ₹900 a month and over ₹10,800 in a year. Consistency beats scale when you are starting out.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary ask-finmitra-btn" data-prompt="How does saving small daily amounts build long-term security?">Ask FinMitra about this</button>
+          </div>
+        </div>
+
+        <div class="literacy-card">
+          <div>
+            <span class="literacy-badge badge-debt">Loan Safety</span>
+            <h3>5. Decoding Loans & Interest (APR)</h3>
+            <p>Always calculate the total amount repaid, not just the monthly installment. Watch out for 'processing fees', late payment penalties, and high compounding rates that trap borrowers in debt spirals.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary ask-finmitra-btn" data-prompt="What should I check before taking a loan or borrowing from an app?">Ask FinMitra about this</button>
+          </div>
+        </div>
+
+        <div class="literacy-card">
+          <div>
+            <span class="literacy-badge badge-scam">Protection</span>
+            <h3>6. Scam & Fraud Defense</h3>
+            <p>Never share your UPI PIN, ATM PIN, or OTP with anyone—even someone claiming to be from your bank. Beware of instant loan apps asking for phone contacts permission or demanding upfront fees before disbursing money.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn btn-sm btn-secondary ask-finmitra-btn" data-prompt="What are the most common financial scams targeting low-income earners and how do I avoid them?">Ask FinMitra about this</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. RESOURCES TAB -->
+    <section id="tab-resources" class="tab-pane">
+      <div class="section-header">
+        <h2 class="section-title">Financial Inclusion & Consumer Resources</h2>
+        <p class="section-subtitle">Verified categories and educational portals for consumer protection and official support.</p>
+      </div>
+
+      <div class="disclaimer-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <div>
+          <strong>Responsible Information Policy:</strong> FinMitra never fabricates government welfare schemes, phone numbers, or guarantee eligibility. We point users toward legitimate official portals and consumer rights categories where up-to-date information can be verified.
+        </div>
+      </div>
+
+      <div class="resources-grid">
+        <div class="resource-category">
+          <h3>🏛️ Consumer Protection & Redressal</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);">Where to report unauthorized charges, predatory lenders, or banking grievances:</p>
+          <ul class="resource-list">
+            <li class="resource-item">
+              <div class="resource-title">Banking Ombudsman / Central Consumer Complaints</div>
+              <div class="resource-desc">Most countries have a central banking ombudsman (e.g. RBI CMS in India, CFPB in the US) to resolve lender disputes if a bank fails to respond within 30 days.</div>
+            </li>
+            <li class="resource-item">
+              <div class="resource-title">Cybercrime & Scam Reporting Portals</div>
+              <div class="resource-desc">Official government cyber police portals handle fraud, unauthorized transfers, and extortionate digital loan apps. Always report immediately if you shared an OTP by mistake.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="resource-category">
+          <h3>📘 Official Financial Literacy Portals</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);">Free, non-commercial education from central monetary authorities:</p>
+          <ul class="resource-list">
+            <li class="resource-item">
+              <div class="resource-title">Central Bank Consumer Literacy Sites</div>
+              <div class="resource-desc">Monetary authorities (such as RBI Kehta Hai, FDIC Money Smart, or OECD financial literacy frameworks) provide verified guides on basic bank accounts (BSBDA / no-frills accounts).</div>
+            </li>
+            <li class="resource-item">
+              <div class="resource-title">Zero-Balance & Basic Savings Accounts</div>
+              <div class="resource-desc">Learn about legally mandated basic banking accounts that require zero minimum balance and provide free ATM access for citizens.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="resource-category">
+          <h3>🛡️ Digital Security & Identity Safety</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);">Core rules for safe everyday digital payments:</p>
+          <ul class="resource-list">
+            <li class="resource-item">
+              <div class="resource-title">The PIN Rule: Entering PIN Means Paying</div>
+              <div class="resource-desc">You NEVER enter your UPI PIN or debit PIN to receive money or refunds. PIN entry is strictly for sending money.</div>
+            </li>
+            <li class="resource-item">
+              <div class="resource-title">Loan App Verification</div>
+              <div class="resource-desc">Only download lending apps registered with recognized Non-Banking Financial Companies (NBFCs) or licensed scheduled banks. Never install third-party APKs from messaging apps.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ABOUT & RESPONSIBLE AI TAB -->
+    <section id="tab-about" class="tab-pane">
+      <div class="section-header">
+        <h2 class="section-title">About FINMITRA & Responsible AI</h2>
+        <p class="section-subtitle">Dedicated to UN Sustainable Development Goal 1: End Poverty in all its forms everywhere.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>🎯 Mission & SDG 1 Alignment</h3>
+          <p>
+            Poverty is not just a lack of income—it is an acute vulnerability to unexpected life events, high borrowing costs, and financial exclusion. 
+            <strong>FINMITRA</strong> exists to bridge this gap by offering everyday financial literacy that is compassionate, free from financial jargon, and accessible to anyone.
+          </p>
+          <p>
+            By helping users establish starter emergency buffers, prioritize essential needs, and avoid predatory loans, FinMitra supports financial resilience at the household level.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3>⚖️ Responsible AI Guardrails</h3>
+          <p>We believe AI in finance must be built on rigorous safety, transparency, and ethics:</p>
+          <ul>
+            <li><strong>Not a Licensed Financial Advisor:</strong> FinMitra provides educational frameworks and practical suggestions, not formal investment, tax, or legal advice.</li>
+            <li><strong>Zero Data Storage:</strong> We do not ask for or store bank account numbers, passwords, OTPs, or government identity documents.</li>
+            <li><strong>Anti-Hallucination Guardrails:</strong> FinMitra does not invent welfare programs, interest rates, or eligibility rules.</li>
+            <li><strong>Prompt-Injection Resistant:</strong> Built to maintain consistent helpful behavior and safeguard system confidentiality.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.15rem; font-weight:700; margin-bottom: 0.5rem;">Technical & API Specification</h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+          FinMitra exposes a clean, production-grade external REST API for automated arena evaluation and third-party financial inclusion integrations:
+        </p>
+        <div style="background: var(--bg-surface-subtle); padding: 1rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.85rem;">
+          <strong>POST /chat</strong><br>
+          Content-Type: application/json<br><br>
+          Request:<br>
+          {"message": "How can I start saving money with a limited income?"}<br><br>
+          Response (200 OK):<br>
+          {"response": "..."}
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.75rem;">
+          Interactive OpenAPI documentation is live at <a href="/docs" target="_blank" style="color:var(--primary); font-weight:600;">/docs</a>.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <strong>FINMITRA</strong> — Your Everyday Financial Companion (Track: UN SDG 1 No Poverty)
+      </div>
+      <div>
+        Built with Google Gemini & FastAPI &bull; Educational Financial Inclusion
+      </div>
+    </div>
+  </footer>
+
+  <!-- Client JavaScript -->
+  <script src="/js/budget.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
