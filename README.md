@@ -175,10 +175,10 @@ The application will be live locally at:
 ### 🌐 Live Public HTTPS Deployment
 
 FinMitra is publicly accessible over secure HTTPS:
-- **Live Web Interface:** `https://576928297f5834.lhr.life/`
-- **Interactive API Swagger Docs:** `https://576928297f5834.lhr.life/docs`
-- **Health Check Endpoint:** `https://576928297f5834.lhr.life/health`
-- **Product Metadata Endpoint:** `https://576928297f5834.lhr.life/api/info`
+- **Live Web Interface:** `https://ce6993c346acf8.lhr.life/`
+- **Interactive API Swagger Docs:** `https://ce6993c346acf8.lhr.life/docs`
+- **Health Check Endpoint:** `https://ce6993c346acf8.lhr.life/health`
+- **Product Metadata Endpoint:** `https://ce6993c346acf8.lhr.life/api/info`
 
 ---
 
