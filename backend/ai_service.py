@@ -55,10 +55,21 @@ class AIService:
             self.status = "unavailable"
             self.last_error_reason = f"Initialization error: {type(e).__name__}"
 
+    def refresh_credentials(self):
+        """Reloads .env and reinitializes client if GEMINI_API_KEY changed or client not ready."""
+        load_dotenv(override=True)
+        current_env_key = os.getenv("GEMINI_API_KEY", "").strip()
+        env_model = os.getenv("GEMINI_MODEL", DEFAULT_PRIMARY_MODEL).strip()
+        if current_env_key != self.api_key or self.client is None or env_model != self.primary_model:
+            self.api_key = current_env_key
+            self.primary_model = env_model or DEFAULT_PRIMARY_MODEL
+            self._initialize_client()
+
     def is_ready(self) -> bool:
         return self.client is not None and bool(self.api_key)
 
     def get_health_status(self) -> dict:
+        self.refresh_credentials()
         return {
             "status": self.status,
             "configured": bool(self.api_key),
@@ -73,11 +84,14 @@ class AIService:
         conversation_history: Optional[List[ChatMessageItem]] = None
     ) -> str:
         """Generates an AI response for a user financial query with safety rules and SDG 1 focus."""
+        # Dynamically refresh credentials in case .env was updated
+        self.refresh_credentials()
+
         if not self.is_ready():
             raise AIServiceError(
-                "The AI service is not configured with a valid API key. Please check server settings.",
+                "FINMITRA's AI service is not authenticated yet. Please try again after the service configuration is completed.",
                 status_code=503,
-                error_code="API_KEY_MISSING"
+                error_code="AUTH_FAILED"
             )
 
         from google.genai import types
@@ -107,29 +121,27 @@ class AIService:
             )
         )
 
-        # Try primary model first, fallback to fallback model if needed
+        # Candidate models to try in order of preference
         models_to_try = [self.primary_model]
-        if FALLBACK_MODEL != self.primary_model:
-            models_to_try.append(FALLBACK_MODEL)
+        candidates = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"]
+        for c in candidates:
+            if c not in models_to_try:
+                models_to_try.append(c)
 
         last_error = None
 
         for model_name in models_to_try:
             try:
-                # Build model-specific config (lite models do not support thinking_config)
-                if "lite" in model_name.lower():
-                    config = types.GenerateContentConfig(
-                        system_instruction=SYSTEM_PROMPT,
-                        temperature=0.6,
-                        max_output_tokens=2048
-                    )
-                else:
-                    config = types.GenerateContentConfig(
-                        system_instruction=SYSTEM_PROMPT,
-                        temperature=0.6,
-                        max_output_tokens=2048,
-                        thinking_config=types.ThinkingConfig(thinking_budget=0)
-                    )
+                config_kwargs = {
+                    "system_instruction": SYSTEM_PROMPT,
+                    "temperature": 0.6,
+                    "max_output_tokens": 2048,
+                }
+                # Only use thinking_config for models that support it
+                if any(m in model_name.lower() for m in ["2.5", "3.5"]) and "lite" not in model_name.lower():
+                    config_kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
+
+                config = types.GenerateContentConfig(**config_kwargs)
 
                 response = self.client.models.generate_content(
                     model=model_name,
@@ -167,6 +179,29 @@ class AIService:
                 err_str = str(e).lower()
                 logger.warning(f"Gemini API error on {model_name}: {type(e).__name__} (code: {getattr(e, 'code', 'N/A')})")
 
+                # Handle model rejecting thinking_config (HTTP 400)
+                if "400" in err_str and ("thinking" in err_str or "unrecognized field" in err_str):
+                    logger.warning(f"Thinking config rejected on {model_name}. Retrying without thinking_config...")
+                    try:
+                        retry_config = types.GenerateContentConfig(
+                            system_instruction=SYSTEM_PROMPT,
+                            temperature=0.6,
+                            max_output_tokens=2048
+                        )
+                        response = self.client.models.generate_content(
+                            model=model_name,
+                            contents=contents,
+                            config=retry_config
+                        )
+                        if response and response.text:
+                            self.status = "provider_reachable"
+                            self.last_error_reason = None
+                            return response.text.strip()
+                    except Exception as retry_e:
+                        logger.warning(f"Retry without thinking_config failed on {model_name}: {type(retry_e).__name__}")
+                        last_error = retry_e
+                        continue
+
                 # Handle Quota / Rate Limit: try fallback model first
                 if "429" in err_str or "quota" in err_str or "resource_exhausted" in err_str or "rate limit" in err_str:
                     if model_name != models_to_try[-1]:
@@ -176,7 +211,7 @@ class AIService:
                     self.status = "quota_limited"
                     self.last_error_reason = "Usage or quota limit reached"
                     raise AIServiceError(
-                        "FinMitra is temporarily receiving high traffic or has reached usage limits. Please wait a moment and try again.",
+                        "FINMITRA is temporarily receiving too many requests. Please wait a moment and try again.",
                         status_code=429,
                         error_code="RATE_LIMIT_OR_QUOTA"
                     )
@@ -191,7 +226,7 @@ class AIService:
                     self.status = "authentication_failed"
                     self.last_error_reason = "Authentication failed (invalid or revoked API key)"
                     raise AIServiceError(
-                        "AI service authentication failed. Please verify API key permissions.",
+                        "FINMITRA's AI service is not authenticated yet. Please try again after the service configuration is completed.",
                         status_code=401,
                         error_code="AUTH_FAILED"
                     )
@@ -208,7 +243,7 @@ class AIService:
             self.status = "unavailable"
             self.last_error_reason = "Timeout or connection issue"
             raise AIServiceError(
-                "FinMitra could not reach the AI service right now. Please check your connection and retry.",
+                "The AI service took too long to respond. Please try again.",
                 status_code=504,
                 error_code="TIMEOUT"
             )
@@ -216,7 +251,7 @@ class AIService:
         self.status = "unavailable"
         self.last_error_reason = str(last_error)
         raise AIServiceError(
-            "FinMitra encountered a temporary error processing your request. Please try again in a moment.",
+            "FINMITRA is temporarily unable to reach the AI service. Please try again shortly.",
             status_code=500,
             error_code="INTERNAL_AI_ERROR"
         )

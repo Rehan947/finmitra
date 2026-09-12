@@ -131,18 +131,18 @@ class ChatManager {
 
         const status = response.status;
         const errCode = errData.code || "";
-        let userFacingError = "FinMitra couldn't reach the AI service right now. Please try again.";
+        let userFacingError = "FINMITRA is temporarily unable to reach the AI service. Please try again shortly.";
 
-        if (status === 401 || errCode === "AUTH_FAILED") {
-          userFacingError = "AI service authentication error. The server API key requires renewal or setup.";
+        if (status === 401 || errCode === "AUTH_FAILED" || errCode === "API_KEY_MISSING") {
+          userFacingError = "FINMITRA's AI service is not authenticated yet. Please try again after the service configuration is completed.";
         } else if (status === 429 || errCode === "RATE_LIMIT_OR_QUOTA") {
-          userFacingError = "FinMitra is temporarily receiving high traffic or has reached usage limits. Please wait a moment and click Retry.";
+          userFacingError = "FINMITRA is temporarily receiving too many requests. Please wait a moment and try again.";
         } else if (status === 504 || errCode === "TIMEOUT") {
-          userFacingError = "FinMitra could not reach the AI service within the timeout window. Please check your connection and click Retry.";
+          userFacingError = "The AI service took too long to respond. Please try again.";
         } else if (status === 422 || errCode === "VALIDATION_ERROR") {
           userFacingError = errData.error || "Please enter a valid financial question (up to 4000 characters).";
         } else if (status === 502 || errCode === "EMPTY_RESPONSE") {
-          userFacingError = errData.error || "FinMitra was unable to generate a response. Please try rephrasing.";
+          userFacingError = errData.error || "FINMITRA is temporarily unable to reach the AI service. Please try again shortly.";
         } else if (errData.error) {
           userFacingError = errData.error;
         }
@@ -164,7 +164,7 @@ class ChatManager {
       console.error("Chat network error:", error);
       this.removeTypingIndicator();
       this.lastFailedMessage = userText;
-      this.showError("Unable to connect to FinMitra. Please check your internet connection and try again.");
+      this.showError("FINMITRA is temporarily unable to reach the AI service. Please try again shortly.");
     } finally {
       this.isLoading = false;
       this.updateSendButtonState();
