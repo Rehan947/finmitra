@@ -168,16 +168,31 @@ python run.py
 ```
 Or on Windows: double-click `start.bat`.
 
-The application will be live at:
+The application will be live locally at:
 - **Web Interface:** `http://localhost:8000/`
 - **Interactive API Docs:** `http://localhost:8000/docs`
+
+### 🌐 Live Public HTTPS Deployment
+
+FinMitra is publicly accessible over secure HTTPS:
+- **Live Web Interface:** `https://576928297f5834.lhr.life/`
+- **Interactive API Swagger Docs:** `https://576928297f5834.lhr.life/docs`
+- **Health Check Endpoint:** `https://576928297f5834.lhr.life/health`
+- **Product Metadata Endpoint:** `https://576928297f5834.lhr.life/api/info`
 
 ---
 
 ## 🧪 Verification & Automated Tests
 
-FinMitra includes a comprehensive 33-test automated suite testing web routes, validation errors, API schemas, live Gemini responses, and prompt-injection resistance:
+FinMitra provides both an offline unit test suite and a live integration test suite:
 
+### 1. Offline Unit Test Suite (Zero Dependencies & Network-Independent)
+Tests schemas, validation, budget calculations, system prompt invariants, and error mappings:
+```bash
+python -m unittest tests/test_unit.py -v
+```
+
+### 2. Full System & Integration Test Suite
 ```bash
 python tests/test_suite.py
 ```
